@@ -1,0 +1,85 @@
+@import "tailwindcss";
+
+@variant dark (&:where([data-theme=dark], [data-theme=dark] *));
+
+:root {
+  --app-bg: #fffdf8;
+  --ink: #1f1a17;
+  --muted: #74675f;
+  --accent: #dd7a1c;
+  --surface: rgba(255, 255, 255, 0.88);
+  --line: rgba(0, 0, 0, 0.12);
+  --hero-1: rgba(254, 226, 177, 0.4);
+  --hero-2: rgba(250, 204, 21, 0.18);
+  --hero-3a: #fff9ef;
+  --hero-3b: #fffdf8;
+  --hero-3c: #fffbf3;
+}
+
+:root[data-theme="dark"] {
+  --app-bg: #0f1115;
+  --ink: #eceff4;
+  --muted: #a8b0bf;
+  --accent: #ff9b3f;
+  --surface: rgba(21, 25, 33, 0.86);
+  --line: rgba(255, 255, 255, 0.14);
+  --hero-1: rgba(64, 80, 124, 0.32);
+  --hero-2: rgba(255, 155, 63, 0.16);
+  --hero-3a: #12161d;
+  --hero-3b: #0f1115;
+  --hero-3c: #141922;
+
+  /* Remap Tailwind zinc scale so all zinc-* utilities flip automatically */
+  --color-white: #1a2030;
+  --color-zinc-50: #141a26;
+  --color-zinc-100: #1e2840;
+  --color-zinc-200: #263050;
+  --color-zinc-300: #344068;
+  --color-zinc-400: #6272a0;
+  --color-zinc-500: #8a9bc0;
+  --color-zinc-600: #a8b5d0;
+  --color-zinc-700: #bec9df;
+  --color-zinc-800: #d4dcee;
+  --color-zinc-900: #ecf0f8;
+}
+
+/*
+  Action buttons use bg-zinc-900 in light mode (near-black).
+  In dark mode zinc-900 is remapped to near-white, which would make
+  text-white invisible. Override those buttons to use the accent color.
+*/
+[data-theme="dark"] .bg-zinc-900 {
+  background-color: var(--accent) !important;
+}
+[data-theme="dark"] .file\:bg-zinc-900::file-selector-button {
+  background-color: var(--accent) !important;
+  color: #0f1115 !important;
+}
+[data-theme="dark"] .disabled\:bg-zinc-300:disabled {
+  background-color: #2a3550 !important;
+}
+[data-theme="dark"] ::placeholder {
+  color: var(--muted);
+  opacity: 1;
+}
+
+@theme inline {
+  --color-background: var(--app-bg);
+  --color-foreground: var(--ink);
+  --font-sans: var(--font-chivo);
+  --font-mono: var(--font-space-mono);
+}
+
+body {
+  background:
+    radial-gradient(circle at 10% 20%, var(--hero-1) 0, transparent 30%),
+    radial-gradient(circle at 90% 0, var(--hero-2) 0, transparent 28%),
+    linear-gradient(120deg, var(--hero-3a) 0%, var(--hero-3b) 45%, var(--hero-3c) 100%);
+  color: var(--ink);
+  font-family: var(--font-chivo), sans-serif;
+}
+
+a,
+button {
+  transition: all 180ms ease;
+}

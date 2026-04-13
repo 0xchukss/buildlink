@@ -1,0 +1,182 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+enum ScanStatus {
+  QUEUED
+  CLEAN
+  INFECTED
+  ERROR
+}
+
+enum ScanTaskStatus {
+  QUEUED
+  PROCESSING
+  COMPLETED
+  FAILED
+}
+
+model Job {
+  id                           String          @id
+  title                        String
+  description                  String?
+  briefUrls                    String?         // JSON array of URLs
+  rewardUsdc                   String
+  creatorAddress               String
+  escrowAddress                String
+  status                       String
+  createdAt                    DateTime        @default(now())
+  approveTxHash                String?
+  fundingTxHash                String?
+  doerAddress                  String?
+  submissionNote               String?
+  submissionSubmittedAt        DateTime?
+  submissionApprovedByCreatorAt DateTime?
+  reviewRating                 Int?
+  reviewComment                String?
+  reviewedAt                   DateTime?
+  proofMintTxId                String?
+  payoutTxId                   String?
+  attachments                  JobAttachment[]
+  proofs                       ProofNft[]
+  messages                     JobMessage[]
+
+  @@index([createdAt(sort: Desc)])
+}
+
+model JobMessage {
+  id            String   @id
+  jobId         String
+  authorAddress String
+  body          String
+  createdAt     DateTime @default(now())
+  job           Job      @relation(fields: [jobId], references: [id], onDelete: Cascade)
+
+  @@index([jobId, createdAt])
+}
+
+model JobAttachment {
+  id               String      @id
+  jobId            String
+  attachmentType   String      @default("proof") // "brief" | "proof"
+  name             String
+  contentType      String
+  size             Int
+  storageKey       String      @unique
+  signedUrl        String?
+  signedUrlExpiresAt DateTime?
+  scanStatus       ScanStatus  @default(QUEUED)
+  scanDetails      String?
+  lastScannedAt    DateTime?
+  createdAt        DateTime    @default(now())
+  job              Job         @relation(fields: [jobId], references: [id], onDelete: Cascade)
+  scanTasks        ScanTask[]
+
+  @@index([jobId])
+}
+
+model ProofNft {
+  id           String   @id
+  jobId        String
+  ownerAddress String
+  templateId   String
+  tokenUri     String?
+  mintTxId     String
+  mintedAt     DateTime @default(now())
+  job          Job      @relation(fields: [jobId], references: [id], onDelete: Cascade)
+
+  @@index([ownerAddress])
+  @@index([jobId])
+}
+
+model ScanTask {
+  id           String         @id
+  attachmentId String
+  status       ScanTaskStatus @default(QUEUED)
+  attempts     Int            @default(0)
+  error        String?
+  createdAt    DateTime       @default(now())
+  updatedAt    DateTime       @updatedAt
+  attachment   JobAttachment  @relation(fields: [attachmentId], references: [id], onDelete: Cascade)
+
+  @@index([status, createdAt])
+  @@index([attachmentId])
+}
+
+model AuthChallenge {
+  id        String   @id
+  nonce     String   @unique
+  address   String
+  message   String
+  expiresAt DateTime
+  usedAt    DateTime?
+  createdAt DateTime @default(now())
+
+  @@index([address, expiresAt])
+}
+
+model AuthSession {
+  id        String   @id
+  address   String
+  issuedAt  DateTime @default(now())
+  expiresAt DateTime
+  revokedAt DateTime?
+
+  @@index([address, expiresAt])
+}
+
+model UserProfile {
+  id           String   @id
+  address      String   @unique
+  displayName  String?
+  bio          String?
+  avatarUrl    String?
+  socialsJson  String?
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  @@index([updatedAt])
+}
+
+model ForumPost {
+  id            String      @id
+  authorAddress String
+  title         String
+  body          String
+  mediaJson     String?
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @updatedAt
+  replies       ForumReply[]
+  likes         ForumLike[]
+
+  @@index([createdAt(sort: Desc)])
+}
+
+model ForumReply {
+  id            String    @id
+  postId        String
+  authorAddress String
+  body          String
+  mediaJson     String?
+  createdAt     DateTime  @default(now())
+  post          ForumPost @relation(fields: [postId], references: [id], onDelete: Cascade)
+
+  @@index([postId, createdAt])
+}
+
+model ForumLike {
+  id            String    @id
+  postId        String
+  authorAddress String
+  createdAt     DateTime  @default(now())
+  post          ForumPost @relation(fields: [postId], references: [id], onDelete: Cascade)
+
+  @@unique([postId, authorAddress])
+  @@index([postId])
+}

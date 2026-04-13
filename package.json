@@ -1,0 +1,38 @@
+{
+  "name": "builderlink-app",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "prisma generate && next build",
+    "start": "next start",
+    "lint": "eslint",
+    "postinstall": "prisma generate"
+  },
+  "dependencies": {
+    "@aws-sdk/client-s3": "^3.1029.0",
+    "@aws-sdk/s3-request-presigner": "^3.1029.0",
+    "@circle-fin/developer-controlled-wallets": "^10.2.0",
+    "@prisma/client": "^6.16.2",
+    "@rainbow-me/rainbowkit": "^2.2.10",
+    "@tanstack/react-query": "^5.99.0",
+    "lucide-react": "^1.8.0",
+    "motion": "^12.38.0",
+    "next": "16.2.3",
+    "prisma": "^6.16.2",
+    "react": "19.2.4",
+    "react-dom": "19.2.4",
+    "viem": "^2.47.12",
+    "wagmi": "^3.6.1"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "^4",
+    "@types/node": "^20",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "eslint": "^9",
+    "eslint-config-next": "16.2.3",
+    "tailwindcss": "^4",
+    "typescript": "^5"
+  }
+}
