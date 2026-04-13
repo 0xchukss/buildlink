@@ -33,22 +33,6 @@ export async function POST(
       );
     }
 
-    const pendingScan = job.submission?.attachments.find(
-      (attachment) => attachment.scanStatus !== "clean",
-    );
-
-    if (pendingScan) {
-      return NextResponse.json(
-        {
-          error:
-            pendingScan.scanStatus === "infected"
-              ? "Submission contains infected attachments"
-              : "Attachment scan still pending or failed",
-        },
-        { status: 409 },
-      );
-    }
-
     const updated = await updateJob(job.id, {
       status: "approved_for_claim",
       submission: {

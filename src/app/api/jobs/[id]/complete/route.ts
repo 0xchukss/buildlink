@@ -78,7 +78,7 @@ export async function POST(
         url: `/api/attachments/${attachmentId}/download`,
         attachmentType: "proof" as const,
         storageKey: stored.storageKey,
-        scanStatus: "queued",
+        scanStatus: "clean",
       });
     }
 

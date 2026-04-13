@@ -207,8 +207,6 @@ export function BuilderFeed() {
         throw new Error(payload.error ?? "Completion failed");
       }
 
-      await fetch("/api/scans/process", { method: "POST" });
-
       setMessage("Submission sent. Waiting for creator approval.");
       setNoteByJob((prev) => ({ ...prev, [job.id]: "" }));
       setAttachmentsByJob((prev) => ({ ...prev, [job.id]: [] }));
@@ -500,14 +498,6 @@ export function BuilderFeed() {
                             <a href={attachment.url} target="_blank" rel="noreferrer" className="underline">
                               {attachment.name}
                             </a>
-                            <span className="ml-2 rounded bg-zinc-200 px-2 py-0.5 text-[10px] uppercase tracking-wide">
-                              {attachment.scanStatus}
-                            </span>
-                            {attachment.scanDetails ? (
-                              <span className="ml-2 text-[10px] text-zinc-500">
-                                {attachment.scanDetails}
-                              </span>
-                            ) : null}
                           </li>
                         ))}
                       </ul>

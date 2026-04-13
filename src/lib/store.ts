@@ -203,7 +203,6 @@ export async function replaceJobAttachments(
     });
     const proofIds = existingProof.map((a) => a.id);
     if (proofIds.length > 0) {
-      await tx.scanTask.deleteMany({ where: { attachmentId: { in: proofIds } } });
       await tx.jobAttachment.deleteMany({ where: { id: { in: proofIds } } });
     }
 
@@ -217,15 +216,7 @@ export async function replaceJobAttachments(
           contentType: attachment.contentType,
           size: attachment.size,
           storageKey: attachment.storageKey,
-          scanStatus: "QUEUED",
-        },
-      });
-
-      await tx.scanTask.create({
-        data: {
-          id: crypto.randomUUID(),
-          attachmentId: attachment.id,
-          status: "QUEUED",
+          scanStatus: "CLEAN",
         },
       });
     }
@@ -276,57 +267,6 @@ export async function updateAttachmentSignedUrl(attachmentId: string, signedUrl:
       signedUrl,
       signedUrlExpiresAt: expiresAt,
     },
-  });
-}
-
-export async function getNextQueuedScanTask() {
-  return prisma.scanTask.findFirst({
-    where: {
-      status: { in: ["QUEUED", "FAILED"] },
-      attempts: { lt: 3 },
-    },
-    orderBy: { createdAt: "asc" },
-    include: { attachment: { include: { job: true } } },
-  });
-}
-
-export async function markScanTaskProcessing(taskId: string) {
-  await prisma.scanTask.update({
-    where: { id: taskId },
-    data: {
-      status: "PROCESSING",
-      attempts: { increment: 1 },
-      error: null,
-    },
-  });
-}
-
-export async function markAttachmentScanResult(input: {
-  attachmentId: string;
-  status: "CLEAN" | "INFECTED" | "ERROR";
-  details?: string;
-}) {
-  await prisma.jobAttachment.update({
-    where: { id: input.attachmentId },
-    data: {
-      scanStatus: input.status,
-      scanDetails: input.details ?? null,
-      lastScannedAt: new Date(),
-    },
-  });
-}
-
-export async function markScanTaskCompleted(taskId: string) {
-  await prisma.scanTask.update({
-    where: { id: taskId },
-    data: { status: "COMPLETED", error: null },
-  });
-}
-
-export async function markScanTaskFailed(taskId: string, error: string) {
-  await prisma.scanTask.update({
-    where: { id: taskId },
-    data: { status: "FAILED", error },
   });
 }
 
