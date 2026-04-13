@@ -55,7 +55,7 @@ export async function mintProofNft(params: {
     blockchain: "ARC-TESTNET",
     contractAddress,
     abiFunctionSignature: "safeMint(address,string)",
-    abiParameters: [params.doerAddress, params.tokenUri ?? "ipfs://builderlink-proof"],
+    abiParameters: [params.doerAddress, params.tokenUri ?? "ipfs://archire-proof"],
     fee: {
       type: "level",
       config: {

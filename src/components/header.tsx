@@ -20,7 +20,7 @@ export function Header() {
     const next = theme === "dark" ? "light" : "dark";
     setTheme(next);
     document.documentElement.setAttribute("data-theme", next);
-    localStorage.setItem("builderlink-theme", next);
+    localStorage.setItem("archire-theme", next);
   }
 
   return (
@@ -34,7 +34,7 @@ export function Header() {
       <div className="mx-auto flex w-full max-w-6xl items-center justify-between px-4 py-3 sm:px-8">
         <div>
           <p className="text-xs uppercase tracking-[0.2em] text-amber-700">
-            Arc Testnet BuilderLink
+            Arc Testnet ArcHire
           </p>
           <h1 className="text-xl font-semibold" style={{ color: "var(--ink)" }}>
             Trust Through Chain

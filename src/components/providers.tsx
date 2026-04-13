@@ -30,9 +30,9 @@ const arcTestnet = defineChain({
 });
 
 const config = getDefaultConfig({
-  appName: "BuilderLink Arc",
+  appName: "ArcHire",
   projectId:
-    process.env.NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID ?? "builderlink-dev-id",
+    process.env.NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID ?? "archire-dev-id",
   chains: [arcTestnet],
   transports: {
     [arcTestnet.id]: http("https://rpc.testnet.arc.network"),

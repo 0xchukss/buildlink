@@ -38,7 +38,7 @@ export async function POST(
     const tokenUri =
       job.submission?.attachments[0]?.url ??
       job.submission?.note ??
-      "ipfs://builderlink-proof";
+      "ipfs://archire-proof";
 
     let mint: Awaited<ReturnType<typeof mintProofNft>> | null = null;
     let mintTxId: string | undefined;

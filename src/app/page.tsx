@@ -57,7 +57,7 @@ export default function Home() {
           </h1>
 
           <p className="max-w-md text-xl leading-relaxed opacity-70">
-            BuilderLink is the independent marketplace where builders earn opportunities based on reputation and verified work.
+            ArcHire is the independent marketplace where builders earn opportunities based on reputation and verified work.
           </p>
 
           <div className="flex flex-wrap gap-4 pt-4">
@@ -156,13 +156,13 @@ export default function Home() {
 
       <footer className="border-t-4 py-12" style={{ borderColor: "var(--line)", background: "var(--surface)" }}>
         <div className="mx-auto flex w-full max-w-7xl flex-col items-center justify-between gap-8 px-6 md:flex-row">
-          <div className="font-serif text-2xl font-bold tracking-tighter uppercase italic">BuilderLink</div>
+          <div className="font-serif text-2xl font-bold tracking-tighter uppercase italic">ArcHire</div>
           <div className="flex gap-8 font-mono text-[10px] uppercase tracking-widest opacity-40">
             <a href="#" className="transition-opacity hover:opacity-100">Twitter</a>
             <a href="#" className="transition-opacity hover:opacity-100">Discord</a>
             <a href="#" className="transition-opacity hover:opacity-100">Docs</a>
           </div>
-          <div className="font-mono text-[10px] uppercase opacity-40">© 2026 BuilderLink</div>
+          <div className="font-mono text-[10px] uppercase opacity-40">© 2026 ArcHire</div>
         </div>
       </footer>
     </div>

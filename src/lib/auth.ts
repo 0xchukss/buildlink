@@ -3,7 +3,7 @@ import { NextResponse } from "next/server";
 import { getAddress, verifyMessage } from "viem";
 import { prisma } from "@/lib/db";
 
-const SESSION_COOKIE = "builderlink_session";
+const SESSION_COOKIE = "archire_session";
 const SESSION_TTL_MS = 1000 * 60 * 60 * 24 * 7;
 const CHALLENGE_TTL_MS = 1000 * 60 * 10;
 
@@ -28,7 +28,7 @@ export function buildSignInMessage(address: string, nonce: string, origin?: stri
   const uri = origin || "http://localhost:3000";
 
   return [
-    "BuilderLink Arc Sign-In",
+    "ArcHire Sign-In",
     `Address: ${address}`,
     `Nonce: ${nonce}`,
     `URI: ${uri}`,

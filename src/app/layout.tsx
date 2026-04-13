@@ -17,7 +17,7 @@ const spaceMono = Space_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "BuilderLink Arc",
+  title: "ArcHire",
   description: "Decentralized job escrow and proof platform on Arc Testnet",
 };
 
@@ -51,7 +51,7 @@ export default function RootLayout({
         <Script id="theme-init" strategy="beforeInteractive">
           {`(function(){
   try {
-    var saved = localStorage.getItem('builderlink-theme');
+    var saved = localStorage.getItem('archire-theme');
     var systemDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
     var theme = saved === 'light' || saved === 'dark' ? saved : (systemDark ? 'dark' : 'light');
     document.documentElement.setAttribute('data-theme', theme);

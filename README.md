@@ -1,6 +1,6 @@
-# BuilderLink Arc (Full-Stack DApp)
+# ArcHire (Full-Stack DApp)
 
-BuilderLink Arc is a decentralized jobbing platform on Arc Testnet with:
+ArcHire is a decentralized jobbing platform on Arc Testnet with:
 
 - User wallets (MetaMask/Rabby/Zerion) via Wagmi + RainbowKit
 - SIWE-style wallet signature sessions for protected backend actions
